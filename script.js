@@ -42,9 +42,17 @@ function displayBooks() {
         const bookDiv = document.createElement("div");
         bookDiv.classList.add("book");
         bookDiv.innerHTML = `
-            <strong>${book.title}</strong> by ${book.author}, ${book.pages} pages
-            <button onclick="removeBook"(${index})">Remove</button>
-            `;
+            <strong>${book.title}</strong> by ${book.author}, ${book.pages} pages `;
+
+        const removeButton = document.createElement("button");
+        removeButton.textContent = "Remove";
+        removeButton.classList.add("remove-btn");
+
+        removeButton.addEventListener("click", function () {
+            removeBook(index);
+        });
+
+        bookDiv.appendChild(removeButton);
         bookLibrary.appendChild(bookDiv);
     });
     }
