@@ -1,7 +1,6 @@
 const addBookButton = document.getElementById("addBookButton");
 const bookForm = document.getElementById("bookForm");
 const addToLibraryButton = document.getElementById("addToLibraryButton");
-const bookLibrary = document.getElementById("bookLibrary");
 
 addBookButton.addEventListener("click", function () {
     if (bookForm.style.display === "none") {
@@ -25,6 +24,7 @@ function Book(title, author, pages) {
 
 function addBookToLibrary(title, author, pages) {
      myLibrary.push(new Book(title, author, pages));
+     displayBooks();
 }
 
 addToLibraryButton.addEventListener("click", function () {
@@ -34,6 +34,22 @@ addToLibraryButton.addEventListener("click", function () {
     addBookToLibrary(bookValue, authorValue, pagesValue);
 });
 
-myLibrary.forEach(book => console.log(book.getDetails()));
+function displayBooks() {
+    const bookLibrary = document.getElementById("bookLibrary");
+    bookLibrary.innerHTML = "";
 
+    myLibrary.forEach((book, index) => {
+        const bookDiv = document.createElement("div");
+        bookDiv.classList.add("book");
+        bookDiv.innerHTML = `
+            <strong>${book.title}</strong> by ${book.author}, ${book.pages} pages
+            <button onclick="removeBook"(${index})">Remove</button>
+            `;
+        bookLibrary.appendChild(bookDiv);
+    });
+    }
 
+function removeBook(index) {
+    myLibrary.splice(index, 1);
+    displayBooks();
+}
