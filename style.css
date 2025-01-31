@@ -1,0 +1,7 @@
+#bookForm {
+    display: none;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 250px;
+    margin-top: 10px;
+}
