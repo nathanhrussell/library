@@ -2,6 +2,8 @@ const addBookButton = document.getElementById("addBookButton");
 const bookForm = document.getElementById("bookForm");
 const addToLibraryButton = document.getElementById("addToLibraryButton");
 
+bookForm.style.display = "none";
+
 addBookButton.addEventListener("click", function () {
     if (bookForm.style.display === "none") {
         bookForm.style.display = "block";
