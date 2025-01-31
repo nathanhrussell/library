@@ -18,10 +18,10 @@ function Book(title, author, pages) {
     this.title = title;
     this.author = author;
     this.pages = pages;
+}
 
-    Book.prototype.getDetails = function() {
-        return `${this.title} by ${this.author}, ${this.pages} pages`;
-    }
+Book.prototype.getDetails = function() {
+    return `${this.title} by ${this.author}, ${this.pages} pages `;
 }
 
 function addBookToLibrary(title, author, pages) {
@@ -43,8 +43,7 @@ function displayBooks() {
     myLibrary.forEach((book, index) => {
         const bookDiv = document.createElement("div");
         bookDiv.classList.add("book");
-        bookDiv.innerHTML = `
-            <strong>${book.title}</strong> by ${book.author}, ${book.pages} pages `;
+        bookDiv.innerHTML = `${book.getDetails()}`;
 
         const removeButton = document.createElement("button");
         removeButton.textContent = "Remove";
