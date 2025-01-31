@@ -1,5 +1,6 @@
 const addBookButton = document.getElementById("addBookButton");
 const bookForm = document.getElementById("bookForm");
+const addToLibraryButton = document.getElementById("addToLibraryButton");
 
 addBookButton.addEventListener("click", function () {
     if (bookForm.style.display === "none") {
@@ -25,7 +26,13 @@ function addBookToLibrary(title, author, pages) {
      myLibrary.push(new Book(title, author, pages));
 }
 
-addBookToLibrary("1984", "George Orwell", "328");
+addToLibraryButton.addEventListener("click", function () {
+    const bookValue = document.getElementById("name").value;
+    const authorValue = document.getElementById("author").value;
+    const pagesValue = document.getElementById("pages").value;
+    addBookToLibrary(bookValue, authorValue, pagesValue);
+});
+
 myLibrary.forEach(book => console.log(book.getDetails()));
 
 
