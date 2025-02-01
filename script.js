@@ -61,6 +61,7 @@ function displayBooks() {
         });
 
         bookDiv.appendChild(removeButton);
+        bookDiv.appendChild(document.createElement("span"));
         bookDiv.appendChild(readStatusButton);
         bookLibrary.appendChild(bookDiv);
     });
