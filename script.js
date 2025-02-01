@@ -71,3 +71,5 @@ function removeBook(index) {
     myLibrary.splice(index, 1);
     displayBooks();
 }
+
+// TODO: CONVERT READ STATUS BUTTON TOGGLE INTO BOOK PROTOTYPE FUNCTIONALITY
