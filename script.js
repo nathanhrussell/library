@@ -47,13 +47,21 @@ function displayBooks() {
 
         const removeButton = document.createElement("button");
         removeButton.textContent = "Remove";
-        removeButton.classList.add("remove-btn");
+
+        const readStatusButton = document.createElement("button");
+        readStatusButton.textContent = "Unread"
+        removeButton.classList.add("unread-btn");
 
         removeButton.addEventListener("click", function () {
             removeBook(index);
         });
 
+        readStatusButton.addEventListener("click", function () {
+            readStatusButton.textContent = readStatusButton.textContent === "Unread" ? "Read" : "Unread"; 
+        });
+
         bookDiv.appendChild(removeButton);
+        bookDiv.appendChild(readStatusButton);
         bookLibrary.appendChild(bookDiv);
     });
     }
