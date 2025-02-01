@@ -21,7 +21,7 @@ function Book(title, author, pages) {
 }
 
 Book.prototype.getDetails = function() {
-    return `${this.title} by ${this.author}, ${this.pages} pages `;
+    return `${this.title} by ${this.author}, ${this.pages} pages<span></span>`;
 }
 
 function addBookToLibrary(title, author, pages) {
