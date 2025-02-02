@@ -14,18 +14,23 @@ addBookButton.addEventListener("click", function () {
 
 const myLibrary = [];
 
-function Book(title, author, pages) {
+function Book(title, author, pages, read = false) {
     this.title = title;
     this.author = author;
     this.pages = pages;
+    this.read = read;
 }
 
 Book.prototype.getDetails = function() {
     return `${this.title} by ${this.author}, ${this.pages} pages<span></span>`;
 }
 
+Book.prototype.toggleReadStatus = function() {
+    this.read = !this.read;
+}
+
 function addBookToLibrary(title, author, pages) {
-     myLibrary.push(new Book(title, author, pages));
+     myLibrary.push(new Book(title, author, pages, false));
      displayBooks();
 }
 
@@ -49,15 +54,16 @@ function displayBooks() {
         removeButton.textContent = "Remove";
 
         const readStatusButton = document.createElement("button");
-        readStatusButton.textContent = "Unread"
-        removeButton.classList.add("unread-btn");
+        readStatusButton.textContent = book.read ? "Read" : "Unread";
+        removeButton.classList.add("read-status-btn");
 
         removeButton.addEventListener("click", function () {
             removeBook(index);
         });
 
         readStatusButton.addEventListener("click", function () {
-            readStatusButton.textContent = readStatusButton.textContent === "Unread" ? "Read" : "Unread"; 
+           book.toggleReadStatus();
+           readStatusButton.textContent = book.read ? "Read" : "Unread"; 
         });
 
         bookDiv.appendChild(removeButton);
@@ -71,5 +77,3 @@ function removeBook(index) {
     myLibrary.splice(index, 1);
     displayBooks();
 }
-
-// TODO: CONVERT READ STATUS BUTTON TOGGLE INTO BOOK PROTOTYPE FUNCTIONALITY
