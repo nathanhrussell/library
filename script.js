@@ -1,80 +1,90 @@
-const addBookButton = document.getElementById("addBookButton");
-const bookForm = document.getElementById("bookForm");
-const addToLibraryButton = document.getElementById("addToLibraryButton");
-
-bookForm.style.display = "none";
-
-addBookButton.addEventListener("click", function () {
-    if (bookForm.style.display === "none") {
-        bookForm.style.display = "block";
-    } else {
-        bookForm.style.display = "none";
-    }
-});
-
-const myLibrary = [];
-
 class Book {
     constructor(title, author, pages, read = false) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
-}
+    }
 
     getDetails() {
         return `${this.title} by ${this.author}, ${this.pages} pages<span></span>`;
     }
+
     toggleReadStatus() {
         this.read = !this.read;
     }
 }
 
-function addBookToLibrary(title, author, pages) {
-     myLibrary.push(new Book(title, author, pages, false));
-     displayBooks();
-}
+class Library {
+    constructor() {
+        this.books = [];
+        this.bookForm = document.getElementById("bookForm");
+        this.bookLibrary = document.getElementById("bookLibrary");
+        this.addBookButton = document.getElementById("addBookButton");
+        this.addToLibraryButton = document.getElementById("addToLibraryButton");
 
-addToLibraryButton.addEventListener("click", function () {
-    const bookValue = document.getElementById("name").value;
-    const authorValue = document.getElementById("author").value;
-    const pagesValue = document.getElementById("pages").value;
-    addBookToLibrary(bookValue, authorValue, pagesValue);
-});
-
-function displayBooks() {
-    const bookLibrary = document.getElementById("bookLibrary");
-    bookLibrary.innerHTML = "";
-
-    myLibrary.forEach((book, index) => {
-        const bookDiv = document.createElement("div");
-        bookDiv.classList.add("book");
-        bookDiv.innerHTML = `${book.getDetails()}`;
-
-        const removeButton = document.createElement("button");
-        removeButton.textContent = "Remove";
-
-        const readStatusButton = document.createElement("button");
-        readStatusButton.textContent = book.read ? "Read" : "Unread";
-        removeButton.classList.add("read-status-btn");
-
-        removeButton.addEventListener("click", function () {
-            removeBook(index);
-        });
-
-        readStatusButton.addEventListener("click", function () {
-           book.toggleReadStatus();
-           readStatusButton.textContent = book.read ? "Read" : "Unread"; 
-        });
-
-        bookDiv.appendChild(removeButton);
-        bookDiv.appendChild(document.createElement("span"));
-        bookDiv.appendChild(readStatusButton);
-        bookLibrary.appendChild(bookDiv);
-    });
+        this.init();
     }
 
-function removeBook(index) {
-    myLibrary.splice(index, 1);
-    displayBooks();
+    init() {
+        this.bookForm.style.display = "none";
+
+        this.addBookButton.addEventListener("click", () => this.toggleForm());
+        this.addToLibraryButton.addEventListener("click", () => this.addBookToLibrary());
+    }
+
+    toggleForm() {
+        this.bookForm.style.display = this.bookForm.style.display === "none" ? "block" : "none";
+    }
+
+    addBook(title, author, pages, read = false) {
+        this.books.push(new Book(title, author, pages, read));
+        this.displayBooks();
+    }
+
+    addBookToLibrary() {
+        const title = document.getElementById("name").value;
+        const author = document.getElementById("author").value;
+        const pages = document.getElementById("pages").value;
+
+        if (title && author && pages) {
+            this.addBook(title, author, pages);
+        }
+    }
+
+    displayBooks() {
+       this.bookLibrary.innerHTML = "";
+
+       this.books.forEach((book, index) => {
+            const bookDiv = document.createElement("div");
+            bookDiv.classList.add("book");
+            bookDiv.innerHTML = book.getDetails();
+
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "Remove";
+            removeButton.classList.add("remove-btn");
+
+            const readStatusButton = document.createElement("button");
+            readStatusButton.textContent = book.read ? "Read" : "Unread";
+            readStatusButton.classList.add("read-status-btn");
+
+            removeButton.addEventListener("click", () => this.removeBook(index));
+            readStatusButton.addEventListener("click", () => {
+                book.toggleReadStatus();
+                readStatusButton.textContent = book.read ? "Read" : "Unread"; 
+            });
+
+            bookDiv.appendChild(removeButton);
+            bookDiv.appendChild(document.createElement("span"));
+            bookDiv.appendChild(readStatusButton);
+            this.bookLibrary.appendChild(bookDiv);
+        });
+    }
+
+    removeBook(index) {
+        this.books.splice(index, 1);
+        this.displayBooks();
+    }
 }
+
+const myLibrary = new Library();
