@@ -14,19 +14,20 @@ addBookButton.addEventListener("click", function () {
 
 const myLibrary = [];
 
-function Book(title, author, pages, read = false) {
+class Book {
+    constructor(title, author, pages, read = false) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
 }
 
-Book.prototype.getDetails = function() {
-    return `${this.title} by ${this.author}, ${this.pages} pages<span></span>`;
-}
-
-Book.prototype.toggleReadStatus = function() {
-    this.read = !this.read;
+    getDetails() {
+        return `${this.title} by ${this.author}, ${this.pages} pages<span></span>`;
+    }
+    toggleReadStatus() {
+        this.read = !this.read;
+    }
 }
 
 function addBookToLibrary(title, author, pages) {
